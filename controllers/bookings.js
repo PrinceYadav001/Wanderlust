@@ -36,6 +36,25 @@ module.exports.createBooking = async (req, res) => {
         return res.redirect(`/listings/${id}/bookings/new`);
     }
 
+    // Availability check — prevent double booking
+    const conflict = await Booking.findOne({
+        listing: id,
+        status: "confirmed",
+        checkIn:  { $lt: checkOutDate },
+        checkOut: { $gt: checkInDate },
+    });
+
+    if (conflict) {
+        req.flash(
+            "error",
+            `This property is already booked from 
+            ${conflict.checkIn.toLocaleDateString("en-IN", { day:"numeric", month:"short", year:"numeric" })} 
+            to ${conflict.checkOut.toLocaleDateString("en-IN", { day:"numeric", month:"short", year:"numeric" })}. 
+            Please choose different dates.`
+        );
+        return res.redirect(`/listings/${id}/bookings/new`);
+    }
+
     // Calculate total nights and price
     const msPerDay    = 1000 * 60 * 60 * 24;
     const nights      = Math.ceil((checkOutDate - checkInDate) / msPerDay);
@@ -51,7 +70,7 @@ module.exports.createBooking = async (req, res) => {
     });
 
     await newBooking.save();
-    req.flash("success", `Booking confirmed! 🎉 ${nights} night(s) for ₹${totalPrice.toLocaleString("en-IN")}`);
+    req.flash("success", `Booking confirmed! ${nights} night(s) for Rs.${totalPrice.toLocaleString("en-IN")}`);
     res.redirect(`/bookings/${newBooking._id}`);
 };
 
