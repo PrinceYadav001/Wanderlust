@@ -2,7 +2,7 @@
 
 A full-stack web application that replicates the core functionality of Airbnb, allowing users to list properties, search for accommodations, make bookings, and leave reviews.
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
@@ -14,80 +14,93 @@ A full-stack web application that replicates the core functionality of Airbnb, a
 - [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
 - [Author](#author)
+- [Acknowledgments](#acknowledgments)
 - [License](#license)
 
-## ✨ Features
+## Features
 
-- **User Authentication**: Sign up, login, and logout functionality with Passport.js
-- **Property Listings**: Create, read, update, and delete property listings
-- **Image Upload**: Upload and manage property images using Cloudinary
-- **Reviews & Ratings**: Users can leave reviews and ratings for properties
-- **Interactive Maps**: Location mapping using Mapbox
-- **Search & Filter**: Search properties by location and other criteria
-- **Responsive Design**: Mobile-friendly user interface
-- **Flash Messages**: User feedback for actions and errors
-- **Session Management**: Secure session handling with MongoDB store
+- **User Authentication:** Sign up, login, and logout functionality using Passport.js.
+- **Property Listings:** Create, read, update, and delete property listings.
+- **Image Upload:** Upload and manage property images using Cloudinary.
+- **Reviews and Ratings:** Allow users to submit reviews and ratings for properties.
+- **Interactive Maps:** Display property locations using Mapbox.
+- **Search and Filter:** Search properties by location and other criteria.
+- **Responsive Design:** Mobile-friendly user interface.
+- **Flash Messages:** Display feedback messages for successful actions and errors.
+- **Session Management:** Secure session handling with MongoDB session storage.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - Database
-- **Mongoose** - ODM for MongoDB
-- **Passport.js** - Authentication middleware
+
+- **Node.js** - JavaScript runtime environment.
+- **Express.js** - Web application framework.
+- **MongoDB** - NoSQL database.
+- **Mongoose** - ODM for MongoDB.
+- **Passport.js** - Authentication middleware.
 
 ### Frontend
-- **EJS** - Templating engine
-- **Bootstrap** - CSS framework
-- **JavaScript** - Client-side scripting
 
-### Services & APIs
-- **Cloudinary** - Image storage and management
-- **Mapbox** - Maps and location services
-- **MongoDB Atlas** - Cloud database
+- **EJS** - Embedded JavaScript templating engine.
+- **Bootstrap** - CSS framework.
+- **JavaScript** - Client-side scripting.
+
+### Services and APIs
+
+- **Cloudinary** - Image storage and management.
+- **Mapbox** - Maps and location services.
+- **MongoDB Atlas** - Cloud-hosted database.
 
 ### Additional Tools
-- **Joi** - Data validation
-- **Multer** - File upload handling
-- **Method Override** - HTTP method override
-- **Connect Flash** - Flash messages
 
-## 📋 Prerequisites
+- **Joi** - Data validation.
+- **Multer** - File upload handling.
+- **Method Override** - HTTP method override support.
+- **Connect Flash** - Flash messaging functionality.
 
-Before running this application, make sure you have the following installed:
+## Prerequisites
 
-- Node.js (v20.17.0 or higher)
-- MongoDB Atlas account
-- Cloudinary account
-- Mapbox account
+Before running this application, make sure you have the following installed or configured:
 
-## 🚀 Installation
+- Node.js (v20.17.0 or higher).
+- MongoDB Atlas account.
+- Cloudinary account.
+- Mapbox account.
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/PrinceYadav001/My-Major-Project.git
-   cd My-Major-Project
-   ```
+## Installation
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+### 1. Clone the Repository
 
-3. **Set up environment variables**
-   Create a `.env` file in the root directory and add the required variables (see Environment Variables section)
+```bash
+git clone https://github.com/PrinceYadav001/My-Major-Project.git
+cd My-Major-Project
+```
 
-4. **Start the application**
-   ```bash
-   node app.js
-   ```
+### 2. Install Dependencies
 
-The application will be running on `http://localhost:8080`
+```bash
+npm install
+```
 
-## 🔧 Environment Variables
+### 3. Configure Environment Variables
 
-Create a `.env` file in the root directory and configure the following variables:
+Create a `.env` file in the root directory and configure the required environment variables. Refer to the Environment Variables section below.
+
+### 4. Start the Application
+
+```bash
+node app.js
+```
+
+The application will be available at:
+
+```text
+http://localhost:8080
+```
+
+## Environment Variables
+
+Create a `.env` file in the root directory and add the following configuration:
 
 ```env
 NODE_ENV=development
@@ -103,94 +116,122 @@ CLOUD_API_SECRET=your_cloudinary_api_secret
 MAP_TOKEN=your_mapbox_access_token
 ```
 
-## 💻 Usage
+Replace the placeholder values with your actual credentials.
 
-1. **Registration**: Create a new account on the signup page
-2. **Login**: Access your account using your credentials
-3. **Browse Listings**: View available properties on the home page
-4. **Create Listing**: Add your own property for others to book
-5. **Property Details**: View detailed information about any property
-6. **Reviews**: Leave reviews and ratings for properties you've experienced
-7. **Profile Management**: Manage your listings and account information
+## Usage
 
-## 📁 Project Structure
+1. **Registration:** Create a new account through the signup page.
+2. **Login:** Access your account using your registered credentials.
+3. **Browse Listings:** Explore available properties on the homepage.
+4. **Create Listing:** Add your own property listing to the platform.
+5. **Property Details:** View detailed information about individual properties.
+6. **Reviews:** Submit reviews and ratings for properties.
+7. **Profile Management:** Manage your listings and account information.
 
-```
+## Project Structure
+
+```text
 ├── app.js                 # Main application file
-├── package.json          # Dependencies and scripts
-├── cloudConfig.js        # Cloudinary configuration
-├── middleware.js         # Custom middleware functions
-├── schema.js            # Joi validation schemas
-├── controllers/         # Route handlers
+├── package.json           # Dependencies and scripts
+├── cloudConfig.js         # Cloudinary configuration
+├── middleware.js          # Custom middleware functions
+├── schema.js              # Joi validation schemas
+├── controllers/           # Route handlers
 │   ├── listings.js
 │   ├── reviews.js
 │   └── users.js
-├── models/              # Database models
+├── models/                # Database models
 │   ├── listing.js
 │   ├── review.js
 │   └── user.js
-├── routes/              # Express routes
+├── routes/                # Express routes
 │   ├── listing.js
 │   ├── review.js
 │   └── user.js
-├── views/               # EJS templates
-│   ├── includes/        # Partial templates
-│   ├── layouts/         # Layout templates
-│   ├── listings/        # Listing-related views
-│   └── Users/          # User-related views
-├── public/              # Static files
-│   ├── CSS/            # Stylesheets
-│   └── js/             # Client-side JavaScript
-├── utils/               # Utility functions
+├── views/                 # EJS templates
+│   ├── includes/          # Partial templates
+│   ├── layouts/           # Layout templates
+│   ├── listings/          # Listing-related views
+│   └── Users/             # User-related views
+├── public/                # Static assets
+│   ├── CSS/               # Stylesheets
+│   └── js/                # Client-side JavaScript
+├── utils/                 # Utility functions
 │   ├── ExpressError.js
 │   └── wrapAsync.js
-└── init/                # Database initialization
+└── init/                  # Database initialization
     ├── data.js
     └── index.js
 ```
 
-## 🔗 API Endpoints
+## API Endpoints
 
 ### Listings
-- `GET /listings` - Get all listings
-- `GET /listings/new` - Show create listing form
-- `POST /listings` - Create new listing
-- `GET /listings/:id` - Get specific listing
-- `GET /listings/:id/edit` - Show edit listing form
-- `PUT /listings/:id` - Update listing
-- `DELETE /listings/:id` - Delete listing
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/listings` | Get all listings |
+| GET | `/listings/new` | Display the create listing form |
+| POST | `/listings` | Create a new listing |
+| GET | `/listings/:id` | Get a specific listing |
+| GET | `/listings/:id/edit` | Display the edit listing form |
+| PUT | `/listings/:id` | Update a listing |
+| DELETE | `/listings/:id` | Delete a listing |
 
 ### Reviews
-- `POST /listings/:id/reviews` - Create review
-- `DELETE /listings/:id/reviews/:reviewId` - Delete review
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/listings/:id/reviews` | Create a review |
+| DELETE | `/listings/:id/reviews/:reviewId` | Delete a review |
 
 ### Users
-- `GET /signup` - Show signup form
-- `POST /signup` - Register new user
-- `GET /login` - Show login form
-- `POST /login` - Login user
-- `POST /logout` - Logout user
 
-## 🤝 Contributing
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/signup` | Display the signup form |
+| POST | `/signup` | Register a new user |
+| GET | `/login` | Display the login form |
+| POST | `/login` | Authenticate a user |
+| POST | `/logout` | Log out the current user |
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+## Contributing
 
-## 👨‍💻 Author
+Contributions are welcome. To contribute to this project:
+
+1. Fork the repository.
+2. Create a feature branch:
+
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+
+3. Commit your changes:
+
+   ```bash
+   git commit -m "Add some AmazingFeature"
+   ```
+
+4. Push your changes:
+
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+
+5. Open a Pull Request.
+
+## Author
 
 **Prince Yadav**
-- GitHub: [@PrinceYadav001](https://github.com/PrinceYadav001)
 
+- **GitHub:** [@PrinceYadav001](https://github.com/PrinceYadav001)
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-- Inspired by Airbnb's user interface and functionality
-- Built as a learning project to understand full-stack web development
-- Thanks to the open-source community for the amazing tools and libraries
+- Inspired by Airbnb's user interface and functionality.
+- Developed as a learning project to explore and understand full-stack web development.
+- Special thanks to the open-source community for providing excellent tools, frameworks, and libraries.
 
----
+## License
 
-**Note**: This is a learning project and not intended for commercial use. Please ensure you comply with all terms of service for the external APIs used in this project.
+This project is a learning project and is not intended for commercial use. Please ensure compliance with the terms of service of all external APIs and services used in this application.
