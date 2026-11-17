@@ -1,0 +1,116 @@
+<% layout('/layouts/boilerplate') %>
+
+<div class="show-wrapper" style="max-width:680px; margin:auto;">
+  <h1 class="show-title" style="font-size:1.8rem;">
+    <i class="fa-solid fa-calendar-check me-2" style="color:var(--brand, #e9405a);"></i>
+    Book This Stay
+  </h1>
+
+  <!-- Listing summary card -->
+  <div class="review-form-card mb-4" style="display:flex; gap:1rem; align-items:center; padding:1rem 1.2rem;">
+    <img src="<%= listing.image.url %>" alt="<%= listing.title %>"
+      style="width:90px; height:70px; object-fit:cover; border-radius:10px; flex-shrink:0;">
+    <div>
+      <div style="font-weight:700; font-size:1.05rem;"><%= listing.title %></div>
+      <div style="color:#666; font-size:.9rem;">
+        <i class="fa-solid fa-location-dot me-1"></i><%= listing.location %>, <%= listing.country %>
+      </div>
+      <div class="price-badge mt-1" style="font-size:.95rem; display:inline-block;">
+        &#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %> <span>/ night</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Form -->
+  <div class="review-form-card">
+    <form action="/listings/<%= listing._id %>/bookings" method="POST" novalidate class="needs-validation">
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label for="checkIn" class="form-label fw-semibold">
+            <i class="fa-solid fa-door-open me-1" style="color:var(--brand, #e9405a);"></i>Check-In
+          </label>
+          <input type="date" id="checkIn" name="booking[checkIn]"
+            class="form-control" required
+            min="<%= new Date().toISOString().split('T')[0] %>">
+          <div class="invalid-feedback">Please select a check-in date.</div>
+        </div>
+        <div class="col-md-6">
+          <label for="checkOut" class="form-label fw-semibold">
+            <i class="fa-solid fa-door-closed me-1" style="color:var(--brand, #e9405a);"></i>Check-Out
+          </label>
+          <input type="date" id="checkOut" name="booking[checkOut]"
+            class="form-control" required
+            min="<%= new Date().toISOString().split('T')[0] %>">
+          <div class="invalid-feedback">Please select a check-out date.</div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="guests" class="form-label fw-semibold">
+          <i class="fa-solid fa-users me-1" style="color:var(--brand, #e9405a);"></i>Guests
+        </label>
+        <input type="number" id="guests" name="booking[guests]"
+          class="form-control" min="1" max="20" value="1" required>
+        <div class="invalid-feedback">Please enter number of guests (1–20).</div>
+      </div>
+
+      <!-- Live price preview -->
+      <div id="price-preview" class="mb-4 p-3 rounded-3"
+        style="background:#fff8f0; border:1.5px dashed #e9405a; display:none;">
+        <div style="font-size:.95rem; color:#555;">
+          <span id="nights-text"></span> × &#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %>
+        </div>
+        <div style="font-size:1.3rem; font-weight:700; color:#e9405a; margin-top:4px;">
+          Total: &#8377;<span id="total-price"></span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn add-btn w-100" style="font-size:1rem; padding:.7rem;">
+        <i class="fa-solid fa-check-circle me-2"></i>Confirm Booking
+      </button>
+
+      <a href="/listings/<%= listing._id %>" class="btn btn-outline-secondary w-100 mt-2">
+        <i class="fa-solid fa-arrow-left me-1"></i>Back to Listing
+      </a>
+    </form>
+  </div>
+</div>
+
+<script>
+  const pricePerNight = <%= listing.price || 0 %>;
+  const checkInInput  = document.getElementById("checkIn");
+  const checkOutInput = document.getElementById("checkOut");
+  const preview       = document.getElementById("price-preview");
+  const nightsText    = document.getElementById("nights-text");
+  const totalPrice    = document.getElementById("total-price");
+
+  function updatePreview() {
+    const ci = new Date(checkInInput.value);
+    const co = new Date(checkOutInput.value);
+    if (checkInInput.value && checkOutInput.value && co > ci) {
+      const nights = Math.ceil((co - ci) / (1000 * 60 * 60 * 24));
+      const total  = nights * pricePerNight;
+      nightsText.textContent = nights + (nights === 1 ? " night" : " nights");
+      totalPrice.textContent = total.toLocaleString("en-IN");
+      preview.style.display = "block";
+    } else {
+      preview.style.display = "none";
+    }
+  }
+
+  // Auto-set checkout min to day after checkin
+  checkInInput.addEventListener("change", () => {
+    if (checkInInput.value) {
+      const nextDay = new Date(checkInInput.value);
+      nextDay.setDate(nextDay.getDate() + 1);
+      checkOutInput.min = nextDay.toISOString().split("T")[0];
+      if (checkOutInput.value && new Date(checkOutInput.value) <= new Date(checkInInput.value)) {
+        checkOutInput.value = "";
+      }
+    }
+    updatePreview();
+  });
+  checkOutInput.addEventListener("change", updatePreview);
+</script>
+

@@ -18,6 +18,8 @@ const User = require("./models/user.js")
 const listingsRouter = require("./routes/listing.js")
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const bookingRouter = require("./routes/booking.js");
+const myBookingsRouter = require("./routes/myBookings.js");
 
 
 
@@ -99,6 +101,9 @@ app.use((req, res, next) => {
 app.use("/listings",listingsRouter)
 app.use("/listings/:id/reviews", reviewsRouter); 
 app.use("/",userRouter);
+app.use("/listings/:id/bookings", bookingRouter);
+app.use("/bookings", myBookingsRouter);
+app.use("/my-bookings", (req, res) => res.redirect("/bookings"));
 
 
 app.all("*",(req, res,next)=>{

@@ -45,6 +45,22 @@
     <span>/ night</span>
   </div>
 
+  <!-- Book Now (non-owners only) -->
+  <% if (currUser && (!listing.owner || !currUser._id.equals(listing.owner._id))) { %>
+    <div class="mb-3">
+      <a href="/listings/<%= listing._id %>/bookings/new" class="btn add-btn" style="font-size:1rem; padding:.6rem 1.6rem;">
+        <i class="fa-solid fa-calendar-check me-2"></i>Book Now
+      </a>
+    </div>
+  <% } %>
+  <% if (!currUser) { %>
+    <div class="mb-3">
+      <a href="/login" class="btn add-btn" style="font-size:1rem; padding:.6rem 1.6rem;">
+        <i class="fa-solid fa-right-to-bracket me-2"></i>Login to Book
+      </a>
+    </div>
+  <% } %>
+
   <!-- Edit / Delete (owner only) -->
   <% if (currUser && listing.owner && currUser._id.equals(listing.owner._id)) { %>
     <div class="show-action-btns mb-3">

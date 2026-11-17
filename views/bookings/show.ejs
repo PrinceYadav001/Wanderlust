@@ -1,0 +1,138 @@
+<% layout('/layouts/boilerplate') %>
+
+<div class="show-wrapper" style="max-width:640px; margin:auto; text-align:center;">
+
+  <!-- Success banner -->
+  <div class="mb-4 p-4 rounded-4" style="background:linear-gradient(135deg,#e9405a,#ff7043); color:#fff;">
+    <i class="fa-solid fa-circle-check" style="font-size:2.5rem;"></i>
+    <h2 class="mt-2 mb-1" style="font-weight:800;">Booking Confirmed!</h2>
+    <p class="mb-0" style="opacity:.9;">Your stay has been reserved. Have a wonderful time! 🏡</p>
+  </div>
+
+  <!-- Booking details card — hotel style -->
+  <div class="review-form-card text-start mb-3" style="border-left:4px solid #e9405a; padding:1.5rem;">
+
+    <!-- Listing image + info -->
+    <div style="display:flex; gap:1rem; align-items:center; margin-bottom:1.2rem;">
+      <img src="<%= booking.listing.image.url %>" alt="<%= booking.listing.title %>"
+        style="width:100px; height:75px; object-fit:cover; border-radius:12px; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,.12);">
+      <div>
+        <div style="font-weight:700; font-size:1.1rem; line-height:1.3;"><%= booking.listing.title %></div>
+        <div style="color:#666; font-size:.88rem; margin-top:3px;">
+          <i class="fa-solid fa-location-dot me-1" style="color:#e9405a;"></i><%= booking.listing.location %>, <%= booking.listing.country %>
+        </div>
+        <% if (booking.listing.owner) { %>
+          <div style="color:#999; font-size:.82rem; margin-top:2px;">
+            <i class="fa-solid fa-user-tie me-1"></i>Host: <strong><%= booking.listing.owner.username %></strong>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Dashed separator like a ticket stub -->
+    <div style="border-top:2px dashed #e0e0e0; margin:1rem -1.5rem; position:relative;">
+      <span style="position:absolute; left:-12px; top:-12px; width:24px; height:24px; background:#f8f8f8; border-radius:50%; border:2px dashed #e0e0e0;"></span>
+      <span style="position:absolute; right:-12px; top:-12px; width:24px; height:24px; background:#f8f8f8; border-radius:50%; border:2px dashed #e0e0e0;"></span>
+    </div>
+
+    <!-- Stay details grid -->
+    <div class="row g-3 mb-3" style="margin-top:.5rem;">
+      <div class="col-6">
+        <div style="font-size:.72rem; color:#aaa; text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px;">Check-In</div>
+        <div style="display:flex; align-items:center; gap:.4rem;">
+          <div style="background:#fff3f5; border-radius:8px; padding:6px 8px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-door-open" style="color:#e9405a; font-size:.95rem;"></i>
+          </div>
+          <div>
+            <div style="font-weight:700; font-size:.95rem;">
+              <%= booking.checkIn.toLocaleDateString("en-IN", { day:"numeric", month:"short" }) %>
+            </div>
+            <div style="font-size:.78rem; color:#888;">
+              <%= booking.checkIn.toLocaleDateString("en-IN", { year:"numeric" }) %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div style="font-size:.72rem; color:#aaa; text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px;">Check-Out</div>
+        <div style="display:flex; align-items:center; gap:.4rem;">
+          <div style="background:#fff3f5; border-radius:8px; padding:6px 8px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-door-closed" style="color:#e9405a; font-size:.95rem;"></i>
+          </div>
+          <div>
+            <div style="font-weight:700; font-size:.95rem;">
+              <%= booking.checkOut.toLocaleDateString("en-IN", { day:"numeric", month:"short" }) %>
+            </div>
+            <div style="font-size:.78rem; color:#888;">
+              <%= booking.checkOut.toLocaleDateString("en-IN", { year:"numeric" }) %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div style="font-size:.72rem; color:#aaa; text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px;">Guests</div>
+        <div style="display:flex; align-items:center; gap:.4rem;">
+          <div style="background:#fff3f5; border-radius:8px; padding:6px 8px; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-person" style="color:#e9405a; font-size:.95rem;"></i>
+          </div>
+          <div style="font-weight:700; font-size:.95rem;">
+            <%= booking.guests %> Guest<%= booking.guests > 1 ? 's' : '' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div style="font-size:.72rem; color:#aaa; text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px;">Status</div>
+        <% if (booking.status === "confirmed") { %>
+          <span style="display:inline-flex; align-items:center; gap:.35rem; background:#e8f9ee; color:#1a7a3f; font-weight:600; font-size:.88rem; padding:.45em .9em; border-radius:20px; border:1.5px solid #b7eacb;">
+            <i class="fa-solid fa-circle-check"></i> Confirmed
+          </span>
+        <% } else { %>
+          <span style="display:inline-flex; align-items:center; gap:.35rem; background:#fdecea; color:#c0392b; font-weight:600; font-size:.88rem; padding:.45em .9em; border-radius:20px; border:1.5px solid #f5b7b1;">
+            <i class="fa-solid fa-circle-xmark"></i> Cancelled
+          </span>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Another dashed line before price -->
+    <div style="border-top:2px dashed #e0e0e0; margin:1rem -1.5rem; position:relative;">
+      <span style="position:absolute; left:-12px; top:-12px; width:24px; height:24px; background:#f8f8f8; border-radius:50%; border:2px dashed #e0e0e0;"></span>
+      <span style="position:absolute; right:-12px; top:-12px; width:24px; height:24px; background:#f8f8f8; border-radius:50%; border:2px dashed #e0e0e0;"></span>
+    </div>
+
+    <!-- Total Price -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.8rem;">
+      <div>
+        <div style="font-size:.8rem; color:#aaa; text-transform:uppercase; letter-spacing:.06em;">Total Amount</div>
+        <div style="font-size:.78rem; color:#bbb; margin-top:1px;">Instant confirmation · No payment needed</div>
+      </div>
+      <span style="font-size:1.8rem; font-weight:800; color:#e9405a;">
+        &#8377;<%= booking.totalPrice.toLocaleString("en-IN") %>
+      </span>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="d-flex gap-2 flex-wrap">
+    <a href="/listings/<%= booking.listing._id %>" class="btn btn-outline-secondary flex-fill">
+      <i class="fa-solid fa-house me-1"></i>View Property
+    </a>
+    <a href="/bookings" class="btn add-btn flex-fill">
+      <i class="fa-solid fa-suitcase-rolling me-1"></i>My Bookings
+    </a>
+  </div>
+
+  <% if (booking.status === "confirmed") { %>
+    <form action="/bookings/<%= booking._id %>/cancel" method="POST" class="mt-2"
+      onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+      <button type="submit" class="btn btn-outline-danger w-100">
+        <i class="fa-solid fa-ban me-1"></i>Cancel Booking
+      </button>
+    </form>
+  <% } %>
+
+</div>
+
