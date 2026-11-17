@@ -22,6 +22,8 @@ A full-stack web application that replicates the core functionality of Airbnb, a
 - **User Authentication:** Sign up, login, and logout functionality using Passport.js.
 - **Property Listings:** Create, read, update, and delete property listings.
 - **Image Upload:** Upload and manage property images using Cloudinary.
+- **Property Booking:** Book any property by selecting check-in date, check-out date, and number of guests. Total price is calculated automatically based on the number of nights. Bookings are confirmed instantly without payment.
+- **My Bookings Dashboard:** Logged-in users can view all their current and previous bookings and cancel any confirmed booking.
 - **Reviews and Ratings:** Allow users to submit reviews and ratings for properties.
 - **Interactive Maps:** Display property locations using Mapbox.
 - **Search and Filter:** Search properties by location and other criteria.
@@ -72,8 +74,8 @@ Before running this application, make sure you have the following installed or c
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/PrinceYadav001/My-Major-Project.git
-cd My-Major-Project
+git clone https://github.com/PrinceYadav001/Wanderlust.git
+cd Wanderlust
 ```
 
 ### 2. Install Dependencies
@@ -125,8 +127,10 @@ Replace the placeholder values with your actual credentials.
 3. **Browse Listings:** Explore available properties on the homepage.
 4. **Create Listing:** Add your own property listing to the platform.
 5. **Property Details:** View detailed information about individual properties.
-6. **Reviews:** Submit reviews and ratings for properties.
-7. **Profile Management:** Manage your listings and account information.
+6. **Book a Property:** Select a listing you do not own, choose check-in and check-out dates, enter the number of guests, and confirm the booking. The total price is calculated automatically.
+7. **My Bookings:** View all your confirmed and cancelled bookings from the navbar. Cancel any active booking from the booking detail page.
+8. **Reviews:** Submit reviews and ratings for properties you have visited.
+9. **Profile Management:** Manage your listings and account information.
 
 ## Project Structure
 
@@ -139,19 +143,24 @@ Replace the placeholder values with your actual credentials.
 ├── controllers/           # Route handlers
 │   ├── listings.js
 │   ├── reviews.js
-│   └── users.js
+│   ├── users.js
+│   └── bookings.js
 ├── models/                # Database models
 │   ├── listing.js
 │   ├── review.js
-│   └── user.js
+│   ├── user.js
+│   └── booking.js
 ├── routes/                # Express routes
 │   ├── listing.js
 │   ├── review.js
-│   └── user.js
+│   ├── user.js
+│   ├── booking.js
+│   └── myBookings.js
 ├── views/                 # EJS templates
 │   ├── includes/          # Partial templates
 │   ├── layouts/           # Layout templates
 │   ├── listings/          # Listing-related views
+│   ├── bookings/          # Booking-related views
 │   └── Users/             # User-related views
 ├── public/                # Static assets
 │   ├── CSS/               # Stylesheets
@@ -194,6 +203,16 @@ Replace the placeholder values with your actual credentials.
 | GET | `/login` | Display the login form |
 | POST | `/login` | Authenticate a user |
 | POST | `/logout` | Log out the current user |
+
+### Bookings
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/listings/:id/bookings/new` | Display the booking form for a property |
+| POST | `/listings/:id/bookings` | Create a new booking |
+| GET | `/bookings` | View all bookings of the logged-in user |
+| GET | `/bookings/:bookingId` | View booking confirmation and details |
+| POST | `/bookings/:bookingId/cancel` | Cancel a confirmed booking |
 
 ## Contributing
 
